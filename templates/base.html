@@ -1,0 +1,14 @@
+<html>
+<head>
+	<title>{% block head-title %}Muypicky.com{% endblock head-title%}</title>
+	{% include 'snippets/css.html' %}
+</head>
+<body>
+{% include 'snippets/nav.html' %}
+
+<div class='container'>
+{% block content %}
+{% endblock %}
+</div>
+</body>
+</html>
