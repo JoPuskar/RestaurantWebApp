@@ -1,35 +1,48 @@
 {% extends "base.html" %}
 
-{% block head-title %}{{ user.username }}Menu Items | {{ block.super }}{% endblock head-title %}
+{% block head-title %}{{ user.username }} Menu Items | {{ block.super }}{% endblock head-title %}
 
 {% block content %}
 
 <h1>{{ user.username }}:</h1>
-<hr/>
+<p>{% include 'profiles/snippet/follow_form.html' with username=user.username is_following=is_following %}</p>
 
-<!-- {% if user.item_set.all.exits %} -->
-{% for rest in user.restaurantlocation_set.all %}
-	<li><b>{{ rest.title }} </b> {{ rest.location }} | {{ rest.category }}
+<form class="form" method="GET" action=".">
+	<input type="text" placeholder="Search" name="q" value="{{ request.get.q }}">
+	<button class="btn btn-default" type="submit">Search</button>
+</form>
+<hr/>
+{% if locations %}
+{% for rest in locations %}
+	<div class="row">
+	<div class="col-sm-12">
+		<div class="thumbnail"><h4><a href="{{ request.path}}?q={{  rest.title}}">{{ rest.title }}</a></h4>
+						<a href="{{ request.path}}?q={{ rest.category}}">{{ rest.category }}</a> |
+						<a href="{{ request.path}}?q={{ rest.location}}">{{ rest.location }}</a>
+
 		<p>
 			<b>Items</b>
 
 			<ul>{% for item in rest.item_set.all %}
 
-					<li>{{ item.name }}<br>
-							{% for ing in item.get_contents %}
-								{{ ing }}
-							{% endfor %}
+					<li style="color: blue;"><b>{{ item.name }}</b><br/>
+						<!-- {{ item.contents }} -->
+						{% for ing in item.get_contents %}
+							<a href="{{ request.path}}?q={{ ing}}">{{ ing}}</a>
+						{% endfor %}	
+							
 					</li>
-
+						
 				{% endfor %}
 			</ul>
 
-		</p>
-	</li>
+		</div>
+	</div>
+	</div>
 {% endfor %}
 
-<!-- {% else %}
+{% else %}
 <p class="lead">No items found!</p>
-{% endif %} -->
+{% endif %}
 
 {% endblock %}

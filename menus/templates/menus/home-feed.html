@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row">
+	<div class="col-sm-6 txt-center col-sm-offset-4">
+		<h1>Your Food Feed</h1>
+
+	{% for obj in object_list %}
+		<div class="thumbnail">
+			<h3><a href="{% url "profiles:detail" username=obj.user.username %}">{{ obj.user.username }}</a></h3>
+			<h4>{{ obj.name }}</h4>
+			<h4><a href="{% url "profiles:detail" username=obj.user.username %}?q={{ obj.restaurants.title }}">{{ obj.restaurants.title }}</a>
+			<a href="{% url "profiles:detail" username=obj.user.username %}?q={{ obj.restaurants.location }}">{{ obj.restaurants.location }}</a>
+			<a href="{% url "profiles:detail" username=obj.user.username %}?q={{ obj.restaurants.category }}">{{ obj.restaurants.category }}</a></h4>
+
+			<p>
+				<b>Items</b>
+					<ul>
+						<li style="color: blue;"><b>{{ obj.name }} with: </b>
+							<!-- {{ item.contents }} -->
+							{% for ing in obj.get_contents %}
+								<a href="{% url "profiles:detail" username=obj.user.username %}?q={{ ing}}">{{ ing}}</a>
+							{% endfor %}	
+						</li>
+					</ul>
+			</p>
+		</div>
+	{% endfor %}
+
+		</div>
+	</div>
+
+{% endblock %}

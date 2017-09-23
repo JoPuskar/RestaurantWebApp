@@ -50,7 +50,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'muypicky.urls'
+ROOT_URLCONF = 'picky.urls'
 
 TEMPLATES = [
     {
@@ -68,7 +68,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'muypicky.wsgi.application'
+WSGI_APPLICATION = 'picky.wsgi.application'
 
 
 # Database
